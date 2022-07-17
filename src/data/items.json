@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Smartphone",
+        "price": 600,
+        "imgUrl": "/images/smartphone.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Computer",
+        "price": 1000,
+        "imgUrl": "/images/computer.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Notebook",
+        "price": 1300,
+        "imgUrl": "/images/notebook.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Tablet",
+        "price": 750,
+        "imgUrl": "/images/tablet.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Printer",
+        "price": 250,
+        "imgUrl": "/images/printer.jpg"
+    }
+]
