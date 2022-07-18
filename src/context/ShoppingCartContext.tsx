@@ -2,46 +2,46 @@ import { createContext, ReactNode, useContext, useState } from "react";
 
 
 
-type ShoppingItemProviderProps = {
+type ShoppingCartProviderPropsControl = {
     children: ReactNode
 };
 
-type ShoppingItemControl = {
+type CartItemControl = {
     id: number
     quatity: number
 }
 
-type ShoppingItemContextControl = {
+type ShoppingCartContextControl = {
     getItemQuantity: (id: number) => number
-    increaseItemQuantity: (id: number) => void
-    decreaseItemQuantity: (id: number) => void
-    removeFromItem: (id: number) => void
+    increaseCartQuantity: (id: number) => void
+    decreaseCartQuantity: (id: number) => void
+    removeFromCart: (id: number) => void
 }
 
 
 
-const ShoppingItemContext = createContext({} as ShoppingItemContextControl);
+const ShoppingCartContext = createContext({} as ShoppingCartContextControl);
 
-export function useShoppingItem() {
-    return useContext(ShoppingItemContext)
+export function useShoppingCart() {
+    return useContext(ShoppingCartContext)
 };
 
 
 
-export function ShoppingItemProvider({ children }: ShoppingItemProviderProps) {
+export function ShoppingCartProvider({ children }: ShoppingCartProviderPropsControl) {
 
-    const [shoppingItems, setShoppingItems] = useState<ShoppingItemControl[]>([])
+    const [cartItems, setCartItems] = useState<CartItemControl[]>([])
 
     function getItemQuantity(id: number) {
         // возвращает элемент по id и у него есть quatity ИЛИ возвращает 0
-        return shoppingItems.find(item => item.id === id)?.quatity || 0
+        return cartItems.find(item => item.id === id)?.quatity || 0
     }
 
-    function increaseItemQuantity(id: number) {
+    function increaseCartQuantity(id: number) {
         // если у элемента по id:
         // quatity равен null, то ставим 1
         // quatity НЕ равен null, то увеличиваем на 1
-        setShoppingItems(currentItems => {
+        setCartItems(currentItems => {
             if(currentItems.find(item => item.id === id) == null) {
                 return [...currentItems, { id, quatity: 1}]
             } else {
@@ -56,11 +56,11 @@ export function ShoppingItemProvider({ children }: ShoppingItemProviderProps) {
         })
     }
 
-    function decreaseItemQuantity(id: number) {
+    function decreaseCartQuantity(id: number) {
         // если у элемента по id:
         // quatity равен 1, то обнуляем
         // quatity больше 1, то уменьшаем на 1
-        setShoppingItems(currentItems => {
+        setCartItems(currentItems => {
             if(currentItems.find(item => item.id === id)?.quatity === 1) {
                 return currentItems.filter(item => item.id !== id)
             } else {
@@ -75,22 +75,22 @@ export function ShoppingItemProvider({ children }: ShoppingItemProviderProps) {
         })
     }
 
-    function removeFromItem(id: number) {
-        // отключение элемента по id
-        setShoppingItems(currentItems => {
+    function removeFromCart(id: number) {
+        // убрать элемент по id из карзины
+        setCartItems(currentItems => {
             return currentItems.filter(item => item.id !== id)
         })
     }
 
     return (
-        <ShoppingItemContext.Provider 
+        <ShoppingCartContext.Provider 
             value={{
                 getItemQuantity,
-                increaseItemQuantity,
-                decreaseItemQuantity,
-                removeFromItem
+                increaseCartQuantity,
+                decreaseCartQuantity,
+                removeFromCart
                 }}>
             {children}
-        </ShoppingItemContext.Provider>
+        </ShoppingCartContext.Provider>
     )
 };

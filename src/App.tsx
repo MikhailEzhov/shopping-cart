@@ -1,18 +1,18 @@
 import { Container } from 'react-bootstrap';
 import Header from './components/header/Header';
 import Store from './components/store/Store';
-import { ShoppingItemProvider } from './context/ShoppingItemContext';
+import { ShoppingCartProvider } from './context/ShoppingCartContext';
 
 
 
 function App() {
     return (
-        <ShoppingItemProvider>
+        <ShoppingCartProvider>
             <Container>
                 <Header/>
                 <Store/>
             </Container>
-        </ShoppingItemProvider>
+        </ShoppingCartProvider>
     )
 };
 

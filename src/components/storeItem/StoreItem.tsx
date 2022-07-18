@@ -1,6 +1,6 @@
 import './storeItem.scss';
 import { Button } from "react-bootstrap";
-import { useShoppingItem } from '../../context/ShoppingItemContext';
+import { useShoppingCart } from '../../context/ShoppingCartContext';
 
 
 
@@ -16,10 +16,10 @@ function StoreItem({ id, name, price, imgUrl}: StoreItemsProps) {
 
     const {
         getItemQuantity,
-        increaseItemQuantity,
-        decreaseItemQuantity,
-        removeFromItem
-    } = useShoppingItem();
+        increaseCartQuantity,
+        decreaseCartQuantity,
+        removeFromCart
+    } = useShoppingCart();
 
     const quantity = getItemQuantity(id);
 
@@ -35,23 +35,22 @@ function StoreItem({ id, name, price, imgUrl}: StoreItemsProps) {
                     ? 
                     <Button 
                         className='store-item__button'
-                        onClick={() => increaseItemQuantity(id)}
+                        onClick={() => increaseCartQuantity(id)}
                     >+ Add to Cart</Button>
                     :
                     <>
                         <div>
-                            <Button onClick={() => decreaseItemQuantity(id)}>-</Button>
+                            <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
                                 <span className='m-2'>{quantity} in cart</span>
-                            <Button onClick={() => increaseItemQuantity(id)}>+</Button>
+                            <Button onClick={() => increaseCartQuantity(id)}>+</Button>
                         </div>
                         <Button 
-                            onClick={() => removeFromItem(id)}
+                            onClick={() => removeFromCart(id)}
                             className='m-2'
                             variant="danger"
                             size="sm"
                         >Remove</Button>
                     </>
-                    
                 }
             </div>
         </div>
