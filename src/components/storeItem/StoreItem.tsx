@@ -1,5 +1,6 @@
 import './storeItem.scss';
 import { Button } from "react-bootstrap";
+import { useShoppingItem } from '../../context/ShoppingItemContext';
 
 
 
@@ -13,10 +14,14 @@ type StoreItemsProps = {
 
 function StoreItem({ id, name, price, imgUrl}: StoreItemsProps) {
 
+    const {
+        getItemQuantity,
+        increaseItemQuantity,
+        decreaseItemQuantity,
+        removeFromItem
+    } = useShoppingItem();
 
-    // const quantity= 0;
-    const quantity: number = 0;
-
+    const quantity = getItemQuantity(id);
 
     return (
         <div className='store-item'>
@@ -28,15 +33,23 @@ function StoreItem({ id, name, price, imgUrl}: StoreItemsProps) {
             <div className='store-item__block-buttons'>
                 {quantity === 0 
                     ? 
-                    <Button className='store-item__button'>+ Add to Cart</Button>
+                    <Button 
+                        className='store-item__button'
+                        onClick={() => increaseItemQuantity(id)}
+                    >+ Add to Cart</Button>
                     :
                     <>
                         <div>
-                            <Button>-</Button>
+                            <Button onClick={() => decreaseItemQuantity(id)}>-</Button>
                                 <span className='m-2'>{quantity} in cart</span>
-                            <Button>+</Button>
+                            <Button onClick={() => increaseItemQuantity(id)}>+</Button>
                         </div>
-                        <Button className='m-2' variant="danger" size="sm">Remove</Button>
+                        <Button 
+                            onClick={() => removeFromItem(id)}
+                            className='m-2'
+                            variant="danger"
+                            size="sm"
+                        >Remove</Button>
                     </>
                     
                 }
