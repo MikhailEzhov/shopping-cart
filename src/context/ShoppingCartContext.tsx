@@ -9,14 +9,18 @@ type ShoppingCartProviderPropsControl = {
 type CartItemControl = {
     id: number
     quatity: number
-}
+};
 
 type ShoppingCartContextControl = {
     getItemQuantity: (id: number) => number
     increaseCartQuantity: (id: number) => void
     decreaseCartQuantity: (id: number) => void
     removeFromCart: (id: number) => void
-}
+    openCart: () => void
+    closeCart: () => void
+    cartQuantity: number
+    cartItems: CartItemControl[]
+};
 
 
 
@@ -30,12 +34,18 @@ export function useShoppingCart() {
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderPropsControl) {
 
-    const [cartItems, setCartItems] = useState<CartItemControl[]>([])
+    const [cartItems, setCartItems] = useState<CartItemControl[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openCart = () => setIsOpen(true);
+    const closeCart = () => setIsOpen(false);
+
+    const cartQuantity = cartItems.reduce((quatity, item) => item.quatity + quatity, 0);
 
     function getItemQuantity(id: number) {
         // возвращает элемент по id и у него есть quatity ИЛИ возвращает 0
         return cartItems.find(item => item.id === id)?.quatity || 0
-    }
+    };
 
     function increaseCartQuantity(id: number) {
         // если у элемента по id:
@@ -54,7 +64,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderPropsCont
                 })
             }
         })
-    }
+    };
 
     function decreaseCartQuantity(id: number) {
         // если у элемента по id:
@@ -73,14 +83,14 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderPropsCont
                 })
             }
         })
-    }
+    };
 
     function removeFromCart(id: number) {
         // убрать элемент по id из карзины
         setCartItems(currentItems => {
             return currentItems.filter(item => item.id !== id)
         })
-    }
+    };
 
     return (
         <ShoppingCartContext.Provider 
@@ -88,7 +98,11 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderPropsCont
                 getItemQuantity,
                 increaseCartQuantity,
                 decreaseCartQuantity,
-                removeFromCart
+                removeFromCart,
+                openCart,
+                closeCart,
+                cartItems,
+                cartQuantity
                 }}>
             {children}
         </ShoppingCartContext.Provider>
