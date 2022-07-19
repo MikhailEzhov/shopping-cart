@@ -1,0 +1,27 @@
+.shopping-cart-item {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+
+    &__picture {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    &__title {
+        font-size: 0.75rem;
+        word-break: break-all;
+    }
+
+    &__text-small {
+        font-size: 0.6rem;
+    }
+
+    &__price {
+        display: flex;
+        flex-direction: column;
+    }
+}
